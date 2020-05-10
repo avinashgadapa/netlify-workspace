@@ -1,0 +1,2 @@
+# netlify-workspace
+Workspace
