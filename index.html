@@ -7,32 +7,60 @@
     <title>Workspace</title>
     <style type="text/css">
         body {
-            background-color: #FFFFFF;
+            background-color: #ffffff;
         }
 
-        .container {
-            margin-top: 200px;
+        .clock-container {
             text-align: center;
-        }
-
-        .container h1 {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, 0%);
+            width: 100%;
             margin-top: 25px;
             margin-bottom: 25px;
+        }
+
+        .clock-container p {
             font-size: 6rem;
             font-family: Helvetica;
             font-weight: 300;
+            margin: 25px;
+        }
+
+        .photo-container-horizontal {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+        .photo-container-horizontal .card {
+            float: left;
+            margin-left: 25px;
         }
     </style>
 </head>
 
 <body>
-    <section>
-        <div class="container">
-            <h1 id="day"></h1>
-            <h1 id="date"></h1>
-            <h1 id="time"></h1>
+    <div class="clock-container">
+        <p id="day"></p>
+        <p id="date"></p>
+        <p id="time"></p>
+    </div>
+
+    <div class="photo-container-horizontal">
+        <div class="card">
+            <img src="https://picsum.photos/300/200?random=1" />
         </div>
-    </section>
+        <div class="card">
+            <img src="https://picsum.photos/300/200?random=2" />
+        </div>
+        <div class="card">
+            <img src="https://picsum.photos/300/200?random=3" />
+        </div>
+    </div>
     <script>
         function getDay(date) {
             var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
