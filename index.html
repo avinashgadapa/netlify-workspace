@@ -52,7 +52,7 @@
             document.getElementById("day").innerHTML = getDay(now);
             document.getElementById("date").innerHTML = getDate(now);
             document.getElementById("time").innerHTML = getTime(now);
-			var delay = (59*1000) + (1000-now.getMilliseconds());
+			var delay = 1000*(59 - now.getSeconds()) + (1000 - now.getMilliseconds());
             setTimeout(showTime, delay);
         };
 
