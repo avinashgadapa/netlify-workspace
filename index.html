@@ -42,20 +42,18 @@
         function getTime(date) {
             var h = date.getHours();
             var t = (h < 12 ? "AM" : "PM");
-            h = (h < 12) ? h : h - 12;
+            h = (h < 12) ? (h==0?12:h) : (h==12?h:h - 12);
             var m = date.getMinutes();
-            //var s = date.getSeconds();
-            //return h + ":" + (m > 9 ? m : "0" + m) + ":" + (s > 9 ? s : "0" + s) + " " + (h < 12 ? "AM" : "PM");
             return h + ":" + (m > 9 ? m : "0" + m) + " " + t;
         }
 
         function showTime() {
             var now = new Date();
-
             document.getElementById("day").innerHTML = getDay(now);
             document.getElementById("date").innerHTML = getDate(now);
             document.getElementById("time").innerHTML = getTime(now);
-            setTimeout(showTime, 60 * 1000);
+			var delay = (59*1000) + (1000-now.getMilliseconds());
+            setTimeout(showTime, delay);
         };
 
         showTime();
