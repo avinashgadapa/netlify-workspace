@@ -38,7 +38,7 @@
 
         .photo-container-horizontal .card {
             float: left;
-            margin-left: 25px;
+            margin-left: 20px;
         }
     </style>
 </head>
@@ -78,7 +78,7 @@
             h = (h < 12) ? (h == 0 ? 12 : h) : (h == 12 ? h : h - 12);
             var m = date.getMinutes();
             return h + ":" + (m > 9 ? m : "0" + m) + " " + t;
-        }
+        };
 
         function showTime() {
             var now = new Date();
@@ -89,7 +89,24 @@
             setTimeout(showTime, delay);
         };
 
+        function refreshPage() {
+            window.location.reload(true);
+        };
+
+        function scheduleRefresh() {
+            var now = new Date();
+
+            var interval = now.getMinutes() % 5;
+            interval = interval == 0 ? 4 : 4 - interval;
+            var refreshDelay =
+                1000 * 60 * interval +
+                1000 * (59 - now.getSeconds()) +
+                (1000 - now.getMilliseconds());
+            setTimeout(refreshPage, refreshDelay);
+        };
+
         showTime();
+        scheduleRefresh();
     </script>
 </body>
 
