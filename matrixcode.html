@@ -14,13 +14,13 @@
 </head>
 
 <body>
-    <canvas id="matrix"></canvas>
+    <canvas id="matrix" width="1024" height="768"></canvas>
       
     <script>
 		const s = window.screen;
 
-		const w = (matrix.width = s.width);
-		const h = (matrix.height = s.height);
+		const w = s.width;
+		const h = s.height;
 
 		const ctx = matrix.getContext("2d");
 		const yPosArr = Array(Math.floor(w / 10) + 1).fill(0);
