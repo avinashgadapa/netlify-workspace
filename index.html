@@ -61,10 +61,6 @@
             <img src="https://picsum.photos/300/200?random=3" />
         </div>
     </div>
-    
-    <audio hidden id="mySound">
-      <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg" />
-    </audio>  
       
     <script>
         function getDay(date) {
@@ -107,8 +103,7 @@
                 1000 * 60 * interval +
                 1000 * (59 - now.getSeconds()) +
                 (1000 - now.getMilliseconds());
-            //setTimeout(refreshPage, refreshDelay);
-            setTimeout(() => { document.getElementById("mySound").play(); }, refreshDelay);
+            setTimeout(refreshPage, refreshDelay);
         };
 
         showTime();
