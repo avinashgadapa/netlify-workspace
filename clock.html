@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" type="image/png" href="https://static.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+    <meta name="apple-mobile-web-app-title" content="CodePen">
+    <link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+    <link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111" />
+    <title>CodePen - DigitalPhotoFrame-Clock</title>
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .main {
+            width: 1024px;
+            height: 768px;
+        }
+
+        .toolbar {
+            width: 964px;
+            height: 40px;
+            background-color: white;
+            padding-top: 30px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        .toolbar p {
+            margin: 0;
+        }
+
+        .toolbar a {
+            color: black;
+            background-color: white;
+        }
+
+        .clock {
+            width: 1024px;
+            height: 432px;
+        }
+
+        .datetime {
+            width: 1024px;
+            height: 380px;
+            background-color: white;
+            float: left;
+            padding-top: 52px;
+        }
+
+        .datetime p {
+            color: black;
+            margin: 0;
+            font-size: 6rem;
+            font-family: Helvetica;
+            text-align: center;
+        }
+
+        .gallery {
+            width: 1024px;
+            height: 266px;
+            background-color: white;
+        }
+
+        .gallery img {
+            margin-left: 29px;
+            margin-top: 31px;
+            margin-bottom: 31px;
+        }
+    </style>
+</head>
+
+<body translate="no">
+    <div class="main">
+        <div class="toolbar">
+            <p>
+                <a href="."><i class="fa fa-refresh fa-fw fa-2x pull-right"></i></a>
+            </p>
+        </div>
+        <div class="clock">
+            <div class="datetime">
+                <p id="day">Wednesday</p>
+                <p id="date">29 September 2020</p>
+                <p id="time">12:52 AM</p>
+            </div>
+        </div>
+        <div class="gallery">
+            <img src="https://picsum.photos/300/200?random=1" />
+            <img src="https://picsum.photos/300/200?random=2" />
+            <img src="https://picsum.photos/300/200?random=3" />
+        </div>
+    </div>
+</body>
+
+</html>
