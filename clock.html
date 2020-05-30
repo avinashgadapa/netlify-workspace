@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -10,67 +11,72 @@
         :root {
           --main-width: 1024px;
           --main-height: 768px;
-        }
         
+          --toolbar-padding: 30px;
+          --toolbar-width: calc(var(--main-width) - 2 * var(--toolbar-padding));
+          --toolbar-height: 98px;
+        
+          --clock-padding: 30px;
+          --clock-width: calc(var(--main-width) - 2 * var(--clock-padding));
+          --clock-height: 350px;
+        
+          --gallery-padding: 15px;
+          --gallery-width: calc(var(--main-width) - 2 * var(--gallery-padding));
+          --gallery-height: 230px;
+        
+          --gallery-img-padding: 15px;
+        
+          --color: black;
+          --background-color: white;
+        
+          --font-size: 6rem;
+          --font-family: Helvetica;
+        }
         body {
-          margin: 0;
+          margin: 0px;
+          padding: 0px;
           overflow: hidden;
         }
-        
         .main {
           width: var(--main-width);
           height: var(--main-height);
         }
-
         .toolbar {
-            width: 964px;
-            height: 40px;
-            background-color: white;
-            padding-top: 30px;
-            padding-left: 30px;
-            padding-right: 30px;
+          width: var(--toolbar-width);
+          height: var(--toolbar-height);
+          background-color: var(--background-color);
+          padding-top: var(--toolbar-padding);
+          padding-left: var(--toolbar-padding);
+          padding-right: var(--toolbar-padding);
         }
-
-        .toolbar p {
-            margin: 0;
+        .toolbar i {
+          color: var(--color);
+          background-color: var(--background-color);
         }
-
-        .toolbar a {
-            color: black;
-            background-color: white;
-        }
-
         .clock {
-            width: 1024px;
-            height: 432px;
+          width: var(--clock-width);
+          height: var(--clock-height);
+          padding-top: var(--clock-padding);
+          padding-left: var(--clock-padding);
+          padding-right: var(--clock-padding);
+          background-color: var(--background-color);
+          color: var(--color);
+          font-size: var(--font-size);
+          font-family: var(--font-family);
         }
-
-        .datetime {
-            width: 1024px;
-            height: 380px;
-            background-color: white;
-            float: left;
-            padding-top: 52px;
+        .clock p {
+          margin: 0px;
+          text-align: center;
         }
-
-        .datetime p {
-            color: black;
-            margin: 0;
-            font-size: 6rem;
-            font-family: Helvetica;
-            text-align: center;
-        }
-
         .gallery {
-            width: 1024px;
-            height: 266px;
-            background-color: white;
+          width: var(--gallery-width);
+          height: var(--gallery-height);
+          padding: var(--gallery-padding);
+          background-color: var(--background-color);
+          font-size: 0;
         }
-
         .gallery img {
-            margin-left: 29px;
-            margin-top: 31px;
-            margin-bottom: 31px;
+          padding: var(--gallery-img-padding);
         }
     </style>
 </head>
@@ -78,16 +84,12 @@
 <body translate="no">
     <div class="main">
         <div class="toolbar">
-            <p>
-                <a href="."><i class="fa fa-refresh fa-fw fa-2x pull-right"></i></a>
-            </p>
+            <i id="theme" class="fa fa-moon-o fa-fw fa-2x pull-right"></i>
         </div>
         <div class="clock">
-            <div class="datetime">
-                <p id="day"></p>
-                <p id="date"></p>
-                <p id="time"></p>
-            </div>
+            <p id="day"></p>
+            <p id="date"></p>
+            <p id="time"></p>
         </div>
         <div class="gallery">
             <img id="photo1" src="#" />
@@ -95,33 +97,85 @@
             <img id="photo3" src="#" />
         </div>
     </div>
-    <script src='https://code.jquery.com/jquery-3.5.1.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js'></script>
     <script id="rendered-js">
+        let root = document.documentElement;
+        
         $(document).ready(function () {
           showClock();
           showGallery();
+          showTheme();
         });
-
+        
+        $("#theme").click(function () {
+          toggleTheme();
+        });
+        
+        function toggleTheme() {
+          if ($("#theme").hasClass("fa-moon-o")) {
+            clearTheme();
+            setThemeNight();
+          } else if ($("#theme").hasClass("fa-sun-o")) {
+            clearTheme();
+            setThemeDay();
+          }
+        }
+        
+        function showTheme() {
+          var now = moment();
+          var hour = now.hour();
+          if (hour >= 6 && hour < 20) {
+            clearTheme();
+            setThemeDay();
+          } else {
+            clearTheme();
+            setThemeNight();
+          }
+        
+          var next = moment(now).endOf("d");
+          setTimeout(showTheme, next - now);
+        }
+        
+        function clearTheme() {
+          if ($("#theme").hasClass("fa-moon-o")) {
+            $("#theme").removeClass("fa-moon-o");
+          } else if ($("#theme").hasClass("fa-sun-o")) {
+            $("#theme").removeClass("fa-sun-o");
+          }
+        }
+        
+        function setThemeDay() {
+          $("#theme").addClass("fa-moon-o");
+          root.style.setProperty("--color", "black");
+          root.style.setProperty("--background-color", "white");
+        }
+        
+        function setThemeNight() {
+          $("#theme").addClass("fa-sun-o");
+          root.style.setProperty("--color", "white");
+          root.style.setProperty("--background-color", "black");
+        }
+        
         function showGallery() {
           var idx = Math.floor(Math.random() * 100 + 1);
           $("#photo1").attr("src", "https://picsum.photos/300/200?random=" + (idx + 1));
           $("#photo2").attr("src", "https://picsum.photos/300/200?random=" + (idx + 2));
           $("#photo3").attr("src", "https://picsum.photos/300/200?random=" + (idx + 3));
-
+        
           var now = moment();
           var next = moment(now)
             .add(5 - (now.minute() % 5), "m")
             .startOf("m");
           setTimeout(showGallery, next - now);
         }
-
+        
         function showClock() {
           var now = moment();
           $("#day").text(now.format("dddd"));
           $("#date").text(now.format("D MMMM YYYY"));
           $("#time").text(now.format("h:mm A"));
-
+        
           var next = moment(now).add(1, "m").startOf("m");
           setTimeout(showClock, next - now);
         }
