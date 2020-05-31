@@ -9,50 +9,58 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body {
-          margin: 0px;
-          padding: 0px;
-          overflow: hidden;
+            margin: 0px;
+            padding: 0px;
+            overflow: hidden;
         }
+
         .theme-light {
-          color: black;
-          background-color: white;
+            color: black;
+            background-color: white;
         }
+
         .theme-dark {
-          color: white;
-          background-color: black;
+            color: white;
+            background-color: black;
         }
+
         .main {
-          width: 1024px;
-          height: 768px;
+            width: 1024px;
+            height: 768px;
         }
+
         .toolbar {
-          width: 964px;
-          height: 98px;
-          padding-top: 30px;
-          padding-left: 30px;
-          padding-right: 30px;
+            width: 964px;
+            height: 78px;
+            padding-top: 30px;
+            padding-left: 30px;
+            padding-right: 30px;
         }
+
         .clock {
-          width: 964px;
-          height: 350px;
-          padding-top: 30px;
-          padding-left: 30px;
-          padding-right: 30px;
-          font-size: 6rem;
-          font-family: Helvetica;
+            width: 964px;
+            height: 350px;
+            padding-top: 30px;
+            padding-left: 30px;
+            padding-right: 30px;
+            font-size: 6rem;
+            font-family: Helvetica;
         }
+
         .clock p {
-          margin: 0px;
-          text-align: center;
+            margin: 0px;
+            text-align: center;
         }
+
         .gallery {
-          width: 994px;
-          height: 230px;
-          padding: 15px;
-          font-size: 0;
+            width: 994px;
+            height: 230px;
+            padding: 15px;
+            font-size: 0;
         }
+
         .gallery img {
-          padding: 15px;
+            padding: 15px;
         }
     </style>
 </head>
@@ -78,102 +86,109 @@
     <script id="rendered-js">
         var theme = '';
 
-        $(document).ready(function () {
-          showClock();
-          showGallery();
-          showTheme();
+        $(document).ready(function() {
+            showClock();
+            showGallery();
+            showTheme();
         });
-        
-        $("#theme").click(function () {
-          toggleTheme();
+
+        $("#theme").click(function() {
+            toggleTheme();
         });
-        
+
         function toggleTheme() {
-          if (theme === 'light') {
-            clearTheme();
-            setThemeDark();
-          } else if (theme === 'dark') {
-            clearTheme();
-            setThemeLight();
-          }
+            if (theme === 'light') {
+                clearTheme();
+                setThemeDark();
+            } else if (theme === 'dark') {
+                clearTheme();
+                setThemeLight();
+            }
         }
-        
+
         function clearTheme() {
-          theme = '';
-          if ($("#theme").hasClass("fa-moon-o")) {
-            $("#theme").removeClass("fa-moon-o");
-          } else if ($("#theme").hasClass("fa-sun-o")) {
-            $("#theme").removeClass("fa-sun-o");
-          }
-          if ($("#toolbar").hasClass("theme-light")) {
-            $("#toolbar").removeClass("theme-light");
-          } else if ($("#toolbar").hasClass("theme-dark")) {
-            $("#toolbar").removeClass("theme-dark");
-          }
-          if ($("#clock").hasClass("theme-light")) {
-            $("#clock").removeClass("theme-light");
-          } else if ($("#clock").hasClass("theme-dark")) {
-            $("#clock").removeClass("theme-dark");
-          }
-          if ($("#gallery").hasClass("theme-light")) {
-            $("#gallery").removeClass("theme-light");
-          } else if ($("#gallery").hasClass("theme-dark")) {
-            $("#gallery").removeClass("theme-dark");
-          }
+            theme = '';
+            if ($("#theme").hasClass("fa-moon-o")) {
+                $("#theme").removeClass("fa-moon-o");
+            } else if ($("#theme").hasClass("fa-sun-o")) {
+                $("#theme").removeClass("fa-sun-o");
+            }
+            if ($("#toolbar").hasClass("theme-light")) {
+                $("#toolbar").removeClass("theme-light");
+            } else if ($("#toolbar").hasClass("theme-dark")) {
+                $("#toolbar").removeClass("theme-dark");
+            }
+            if ($("#clock").hasClass("theme-light")) {
+                $("#clock").removeClass("theme-light");
+            } else if ($("#clock").hasClass("theme-dark")) {
+                $("#clock").removeClass("theme-dark");
+            }
+            if ($("#gallery").hasClass("theme-light")) {
+                $("#gallery").removeClass("theme-light");
+            } else if ($("#gallery").hasClass("theme-dark")) {
+                $("#gallery").removeClass("theme-dark");
+            }
         }
-        
+
         function setThemeLight() {
-          theme = 'light';
-          $("#theme").addClass("fa-moon-o");
-          $("#toolbar").addClass("theme-light");
-          $("#clock").addClass("theme-light");
-          $("#gallery").addClass("theme-light");
+            theme = 'light';
+            $("#theme").addClass("fa-moon-o");
+            $("#toolbar").addClass("theme-light");
+            $("#clock").addClass("theme-light");
+            $("#gallery").addClass("theme-light");
         }
-        
+
         function setThemeDark() {
-          theme = 'dark';
-          $("#theme").addClass("fa-sun-o");
-          $("#toolbar").addClass("theme-dark");
-          $("#clock").addClass("theme-dark");
-          $("#gallery").addClass("theme-dark");
+            theme = 'dark';
+            $("#theme").addClass("fa-sun-o");
+            $("#toolbar").addClass("theme-dark");
+            $("#clock").addClass("theme-dark");
+            $("#gallery").addClass("theme-dark");
         }
-        
+
         function showTheme() {
-          var now = moment();
-          var hour = now.hour();
-          if (hour >= 6 && hour < 20) {
-            clearTheme();
-            setThemeLight();
-          } else {
-            clearTheme();
-            setThemeDark();
-          }
-        
-          var next = moment(now).endOf("d");
-          setTimeout(showTheme, next - now);
+            var now = moment();
+            var hour = now.hour();
+            if (hour >= 6 && hour < 20) {
+                clearTheme();
+                setThemeLight();
+            } else {
+                clearTheme();
+                setThemeDark();
+            }
+
+            var next;
+            if (hour < 6) {
+                next = moment(now).hour(6).startOf("h");
+            } else if (hour < 20) {
+                next = moment(now).hour(20).startOf("h");
+            } else {
+                next = moment(now).add(1, "d").hour(6).startOf("h");
+            }
+            setTimeout(showTheme, next - now);
         }
-        
+
         function showGallery() {
-          var idx = Math.floor(Math.random() * 100 + 1);
-          $("#photo1").attr("src", "https://picsum.photos/300/200?random=" + (idx + 1));
-          $("#photo2").attr("src", "https://picsum.photos/300/200?random=" + (idx + 2));
-          $("#photo3").attr("src", "https://picsum.photos/300/200?random=" + (idx + 3));
-        
-          var now = moment();
-          var next = moment(now)
-            .add(5 - (now.minute() % 5), "m")
-            .startOf("m");
-          setTimeout(showGallery, next - now);
+            var idx = Math.floor(Math.random() * 100 + 1);
+            $("#photo1").attr("src", "https://picsum.photos/300/200?random=" + (idx + 1));
+            $("#photo2").attr("src", "https://picsum.photos/300/200?random=" + (idx + 2));
+            $("#photo3").attr("src", "https://picsum.photos/300/200?random=" + (idx + 3));
+
+            var now = moment();
+            var next = moment(now)
+                .add(5 - (now.minute() % 5), "m")
+                .startOf("m");
+            setTimeout(showGallery, next - now);
         }
-        
+
         function showClock() {
-          var now = moment();
-          $("#day").text(now.format("dddd"));
-          $("#date").text(now.format("D MMMM YYYY"));
-          $("#time").text(now.format("h:mm A"));
-        
-          var next = moment(now).add(1, "m").startOf("m");
-          setTimeout(showClock, next - now);
+            var now = moment();
+            $("#day").text(now.format("dddd"));
+            $("#date").text(now.format("D MMMM YYYY"));
+            $("#time").text(now.format("h:mm A"));
+
+            var next = moment(now).add(1, "m").startOf("m");
+            setTimeout(showClock, next - now);
         }
     </script>
 </body>
