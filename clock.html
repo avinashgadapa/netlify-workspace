@@ -6,102 +6,78 @@
     <meta charset="UTF-8">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>DigitalPhotoFrame-Clock</title>
-    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        :root {
-          --main-width: 1024px;
-          --main-height: 768px;
-        
-          --toolbar-padding: 30px;
-          --toolbar-width: calc(var(--main-width) - 2 * var(--toolbar-padding));
-          --toolbar-height: 98px;
-        
-          --clock-padding: 30px;
-          --clock-width: calc(var(--main-width) - 2 * var(--clock-padding));
-          --clock-height: 350px;
-        
-          --gallery-padding: 15px;
-          --gallery-width: calc(var(--main-width) - 2 * var(--gallery-padding));
-          --gallery-height: 230px;
-        
-          --gallery-img-padding: 15px;
-        
-          --color: black;
-          --background-color: white;
-        
-          --font-size: 6rem;
-          --font-family: Helvetica;
-        }
         body {
           margin: 0px;
           padding: 0px;
           overflow: hidden;
         }
+        .theme-light {
+          color: black;
+          background-color: white;
+        }
+        .theme-dark {
+          color: white;
+          background-color: black;
+        }
         .main {
-          width: var(--main-width);
-          height: var(--main-height);
+          width: 1024px;
+          height: 768px;
         }
         .toolbar {
-          width: var(--toolbar-width);
-          height: var(--toolbar-height);
-          background-color: var(--background-color);
-          padding-top: var(--toolbar-padding);
-          padding-left: var(--toolbar-padding);
-          padding-right: var(--toolbar-padding);
-        }
-        .toolbar i {
-          color: var(--color);
-          background-color: var(--background-color);
+          width: 964px;
+          height: 98px;
+          padding-top: 30px;
+          padding-left: 30px;
+          padding-right: 30px;
         }
         .clock {
-          width: var(--clock-width);
-          height: var(--clock-height);
-          padding-top: var(--clock-padding);
-          padding-left: var(--clock-padding);
-          padding-right: var(--clock-padding);
-          background-color: var(--background-color);
-          color: var(--color);
-          font-size: var(--font-size);
-          font-family: var(--font-family);
+          width: 964px;
+          height: 350px;
+          padding-top: 30px;
+          padding-left: 30px;
+          padding-right: 30px;
+          font-size: 6rem;
+          font-family: Helvetica;
         }
         .clock p {
           margin: 0px;
           text-align: center;
         }
         .gallery {
-          width: var(--gallery-width);
-          height: var(--gallery-height);
-          padding: var(--gallery-padding);
-          background-color: var(--background-color);
+          width: 994px;
+          height: 230px;
+          padding: 15px;
           font-size: 0;
         }
         .gallery img {
-          padding: var(--gallery-img-padding);
+          padding: 15px;
         }
     </style>
 </head>
 
 <body translate="no">
     <div class="main">
-        <div class="toolbar">
+        <div class="toolbar theme-light" id="toolbar">
             <i id="theme" class="fa fa-moon-o fa-fw fa-2x pull-right"></i>
         </div>
-        <div class="clock">
+        <div class="clock theme-light" id="clock">
             <p id="day"></p>
             <p id="date"></p>
             <p id="time"></p>
         </div>
-        <div class="gallery">
+        <div class="gallery theme-light" id="gallery">
             <img id="photo1" src="#" />
             <img id="photo2" src="#" />
             <img id="photo3" src="#" />
         </div>
     </div>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
     <script id="rendered-js">
-        let root = document.documentElement;
-        
+        var theme = '';
+
         $(document).ready(function () {
           showClock();
           showGallery();
@@ -113,13 +89,53 @@
         });
         
         function toggleTheme() {
-          if ($("#theme").hasClass("fa-moon-o")) {
+          if (theme === 'light') {
             clearTheme();
-            setThemeNight();
-          } else if ($("#theme").hasClass("fa-sun-o")) {
+            setThemeDark();
+          } else if (theme === 'dark') {
             clearTheme();
-            setThemeDay();
+            setThemeLight();
           }
+        }
+        
+        function clearTheme() {
+          theme = '';
+          if ($("#theme").hasClass("fa-moon-o")) {
+            $("#theme").removeClass("fa-moon-o");
+          } else if ($("#theme").hasClass("fa-sun-o")) {
+            $("#theme").removeClass("fa-sun-o");
+          }
+          if ($("#toolbar").hasClass("theme-light")) {
+            $("#toolbar").removeClass("theme-light");
+          } else if ($("#toolbar").hasClass("theme-dark")) {
+            $("#toolbar").removeClass("theme-dark");
+          }
+          if ($("#clock").hasClass("theme-light")) {
+            $("#clock").removeClass("theme-light");
+          } else if ($("#clock").hasClass("theme-dark")) {
+            $("#clock").removeClass("theme-dark");
+          }
+          if ($("#gallery").hasClass("theme-light")) {
+            $("#gallery").removeClass("theme-light");
+          } else if ($("#gallery").hasClass("theme-dark")) {
+            $("#gallery").removeClass("theme-dark");
+          }
+        }
+        
+        function setThemeLight() {
+          theme = 'light';
+          $("#theme").addClass("fa-moon-o");
+          $("#toolbar").addClass("theme-light");
+          $("#clock").addClass("theme-light");
+          $("#gallery").addClass("theme-light");
+        }
+        
+        function setThemeDark() {
+          theme = 'dark';
+          $("#theme").addClass("fa-sun-o");
+          $("#toolbar").addClass("theme-dark");
+          $("#clock").addClass("theme-dark");
+          $("#gallery").addClass("theme-dark");
         }
         
         function showTheme() {
@@ -127,34 +143,14 @@
           var hour = now.hour();
           if (hour >= 6 && hour < 20) {
             clearTheme();
-            setThemeDay();
+            setThemeLight();
           } else {
             clearTheme();
-            setThemeNight();
+            setThemeDark();
           }
         
           var next = moment(now).endOf("d");
           setTimeout(showTheme, next - now);
-        }
-        
-        function clearTheme() {
-          if ($("#theme").hasClass("fa-moon-o")) {
-            $("#theme").removeClass("fa-moon-o");
-          } else if ($("#theme").hasClass("fa-sun-o")) {
-            $("#theme").removeClass("fa-sun-o");
-          }
-        }
-        
-        function setThemeDay() {
-          $("#theme").addClass("fa-moon-o");
-          root.style.setProperty("--color", "black");
-          root.style.setProperty("--background-color", "white");
-        }
-        
-        function setThemeNight() {
-          $("#theme").addClass("fa-sun-o");
-          root.style.setProperty("--color", "white");
-          root.style.setProperty("--background-color", "black");
         }
         
         function showGallery() {
